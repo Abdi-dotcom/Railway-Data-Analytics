@@ -1,0 +1,31 @@
+{
+  "datasets": [
+    {
+      "name": "4a0c3e83",
+      "displayName": "Untitled dataset",
+      "queryLines": [
+        ""
+      ]
+    },
+    {
+      "name": "67d8e8c8",
+      "displayName": "railway",
+      "queryLines": [
+        "SELECT * FROM workspace.default.railway"
+      ]
+    }
+  ],
+  "pages": [
+    {
+      "name": "34963147",
+      "displayName": "Untitled page",
+      "pageType": "PAGE_TYPE_CANVAS"
+    }
+  ],
+  "uiSettings": {
+    "theme": {
+      "widgetHeaderAlignment": "ALIGNMENT_UNSPECIFIED"
+    },
+    "applyModeEnabled": false
+  }
+}
