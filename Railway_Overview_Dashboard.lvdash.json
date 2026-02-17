@@ -1,14 +1,20 @@
 {
   "datasets": [
     {
-      "name": "4a0c3e83",
-      "displayName": "Untitled dataset",
+      "name": "67d8e8c8",
+      "displayName": "Journey Status Distribution",
       "queryLines": [
-        ""
+        "SELECT \n",
+        "`Journey Status`, \n",
+        "COUNT(*) AS count,\n",
+        "Round(COUNT(*)*100.0/SUM(COUNT(*)) OVER(),2) AS percentage\n",
+        "FROM workspace.default.railway\n",
+        "GROUP BY `Journey Status`\n",
+        "ORDER BY count DESC;"
       ]
     },
     {
-      "name": "67d8e8c8",
+      "name": "f10be708",
       "displayName": "railway",
       "queryLines": [
         "SELECT * FROM workspace.default.railway"
@@ -18,8 +24,154 @@
   "pages": [
     {
       "name": "34963147",
-      "displayName": "Untitled page",
-      "pageType": "PAGE_TYPE_CANVAS"
+      "displayName": "Railway_Overview_Dashboard",
+      "layout": [
+        {
+          "widget": {
+            "name": "77e657e4",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "67d8e8c8",
+                  "fields": [
+                    {
+                      "name": "sum(percentage)",
+                      "expression": "SUM(`percentage`)"
+                    },
+                    {
+                      "name": "Journey Status",
+                      "expression": "`Journey Status`"
+                    }
+                  ],
+                  "filters": [
+                    {
+                      "expression": "`Journey Status` IN (`Journey Status`) OR TRUE"
+                    }
+                  ],
+                  "disaggregated": false,
+                  "orders": [
+                    {
+                      "direction": "DESC",
+                      "expression": "SUM(`percentage`)"
+                    }
+                  ]
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "title": "Journey Status Distribution",
+                "showTitle": true,
+                "headerAlignment": "center"
+              },
+              "widgetType": "pie",
+              "encodings": {
+                "angle": {
+                  "fieldName": "sum(percentage)",
+                  "scale": {
+                    "type": "quantitative"
+                  },
+                  "axis": {
+                    "hideTitle": true
+                  },
+                  "format": {
+                    "type": "number-percent",
+                    "decimalPlaces": {
+                      "type": "exact",
+                      "places": 1
+                    },
+                    "hideGroupSeparator": false
+                  }
+                },
+                "color": {
+                  "fieldName": "Journey Status",
+                  "legend": {
+                    "hideTitle": true,
+                    "hide": false,
+                    "position": "left"
+                  },
+                  "displayName": "Journey Status",
+                  "scale": {
+                    "type": "categorical",
+                    "mappings": [
+                      {
+                        "value": "Cancelled",
+                        "color": {
+                          "themeColorType": "visualizationColors",
+                          "position": 4
+                        }
+                      },
+                      {
+                        "value": "On Time",
+                        "color": {
+                          "themeColorType": "visualizationColors",
+                          "position": 3
+                        }
+                      },
+                      {
+                        "value": "Delayed",
+                        "color": {
+                          "themeColorType": "visualizationColors",
+                          "position": 2
+                        }
+                      }
+                    ],
+                    "sort": {
+                      "by": "measure-reversed",
+                      "measure": {
+                        "fieldName": "sum(percentage)"
+                      }
+                    }
+                  }
+                },
+                "label": {
+                  "show": true,
+                  "text": {
+                    "fieldName": "sum(percentage)"
+                  }
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 4,
+            "height": 5
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_CANVAS",
+      "layoutVersion": "GRID_V1"
+    },
+    {
+      "name": "1f02bdbe",
+      "displayName": "Global Filters",
+      "layout": [
+        {
+          "widget": {
+            "name": "1ee9b782",
+            "spec": {
+              "version": 2,
+              "widgetType": "filter-single-select",
+              "encodings": {},
+              "frame": {
+                "showTitle": true
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 1,
+            "height": 2
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_GLOBAL_FILTERS",
+      "layoutVersion": "GRID_V1"
     }
   ],
   "uiSettings": {
