@@ -39,6 +39,16 @@
         "GROUP BY `Date of Journey`, `Journey Status`\n",
         "ORDER BY `Date of Journey`, `Journey Status`"
       ]
+    },
+    {
+      "name": "f17c143d",
+      "displayName": "Purchase Type by Ticket Class",
+      "queryLines": [
+        "SELECT `Purchase Type`, `Ticket Class`, COUNT(*) AS count\n",
+        "FROM workspace.default.railway\n",
+        "GROUP BY `Purchase Type`, `Ticket Class`\n",
+        "ORDER BY `Purchase Type`, `Ticket Class`"
+      ]
     }
   ],
   "pages": [
@@ -265,6 +275,77 @@
           "position": {
             "x": 0,
             "y": 5,
+            "width": 4,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "d0e38a97",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "f17c143d",
+                  "fields": [
+                    {
+                      "name": "Ticket Class",
+                      "expression": "`Ticket Class`"
+                    },
+                    {
+                      "name": "Purchase Type",
+                      "expression": "`Purchase Type`"
+                    },
+                    {
+                      "name": "count",
+                      "expression": "`count`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "title": "Purchase Type by Ticket Class",
+                "showTitle": true
+              },
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "Purchase Type",
+                  "displayName": "Purchase Type",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "count",
+                  "displayName": "Count",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "Ticket Class",
+                  "legend": {
+                    "position": "right"
+                  },
+                  "displayName": "Ticket Class",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "label": {
+                  "show": true
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 4,
+            "y": 0,
             "width": 4,
             "height": 6
           }
