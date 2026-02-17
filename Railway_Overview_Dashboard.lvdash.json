@@ -2,15 +2,12 @@
   "datasets": [
     {
       "name": "67d8e8c8",
-      "displayName": "Journey Status Distribution",
+      "displayName": "Payment Method Distribution",
       "queryLines": [
-        "SELECT \n",
-        "`Journey Status`, \n",
-        "COUNT(*) AS count,\n",
-        "Round(COUNT(*)*100.0/SUM(COUNT(*)) OVER(),2) AS percentage\n",
+        "SELECT `Payment Method`, COUNT(*) AS count\n",
         "FROM workspace.default.railway\n",
-        "GROUP BY `Journey Status`\n",
-        "ORDER BY count DESC;"
+        "GROUP BY `Payment Method`\n",
+        "ORDER BY count DESC"
       ]
     },
     {
@@ -18,6 +15,29 @@
       "displayName": "railway",
       "queryLines": [
         "SELECT * FROM workspace.default.railway"
+      ]
+    },
+    {
+      "name": "b24a08ec",
+      "displayName": "Journey Status breakdown",
+      "queryLines": [
+        "SELECT \r\n",
+        "    `Journey Status`, \r\n",
+        "    COUNT(*) AS count,\r\n",
+        "    ROUND(COUNT(*) * 100.0 / SUM(COUNT(*)) OVER(), 2) AS percentage\r\n",
+        "FROM workspace.default.railway\r\n",
+        "GROUP BY `Journey Status`\r\n",
+        "ORDER BY count DESC;"
+      ]
+    },
+    {
+      "name": "05db5f2e",
+      "displayName": "Journey Status Trend Over Time",
+      "queryLines": [
+        "SELECT `Date of Journey`, `Journey Status`, COUNT(*) AS count\n",
+        "FROM workspace.default.railway\n",
+        "GROUP BY `Date of Journey`, `Journey Status`\n",
+        "ORDER BY `Date of Journey`, `Journey Status`"
       ]
     }
   ],
@@ -33,7 +53,7 @@
               {
                 "name": "main_query",
                 "query": {
-                  "datasetName": "67d8e8c8",
+                  "datasetName": "b24a08ec",
                   "fields": [
                     {
                       "name": "sum(percentage)",
@@ -42,11 +62,6 @@
                     {
                       "name": "Journey Status",
                       "expression": "`Journey Status`"
-                    }
-                  ],
-                  "filters": [
-                    {
-                      "expression": "`Journey Status` IN (`Journey Status`) OR TRUE"
                     }
                   ],
                   "disaggregated": false,
@@ -140,6 +155,118 @@
             "y": 0,
             "width": 4,
             "height": 5
+          }
+        },
+        {
+          "widget": {
+            "name": "bc379746",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "67d8e8c8",
+                  "fields": [
+                    {
+                      "name": "Payment Method",
+                      "expression": "`Payment Method`"
+                    },
+                    {
+                      "name": "count",
+                      "expression": "`count`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "title": "Payment Method Distribution",
+                "showTitle": true,
+                "headerAlignment": "center"
+              },
+              "mark": {
+                "layout": "stack"
+              },
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "Payment Method",
+                  "axis": {
+                    "labelAngle": 45
+                  },
+                  "displayName": "Payment Method",
+                  "scale": {
+                    "type": "categorical",
+                    "categorySize": {
+                      "type": "number-of-categories",
+                      "number": 3
+                    },
+                    "sort": {
+                      "by": "y-reversed"
+                    }
+                  }
+                },
+                "y": {
+                  "fieldName": "count",
+                  "axis": {
+                    "hideLabels": true,
+                    "hideGrid": true,
+                    "hideTitle": true
+                  },
+                  "displayName": "Count",
+                  "scale": {
+                    "type": "quantitative",
+                    "reverse": false
+                  }
+                },
+                "color": {
+                  "fieldName": "Payment Method",
+                  "legend": {
+                    "position": "right",
+                    "hideTitle": true,
+                    "hide": true
+                  },
+                  "displayName": "Payment Method",
+                  "scale": {
+                    "type": "categorical",
+                    "mappings": [
+                      {
+                        "value": "Credit Card",
+                        "color": {
+                          "themeColorType": "visualizationColors",
+                          "position": 3
+                        }
+                      },
+                      {
+                        "value": "Contactless",
+                        "color": {
+                          "themeColorType": "visualizationColors",
+                          "position": 2
+                        }
+                      },
+                      {
+                        "value": "Debit Card",
+                        "color": {
+                          "themeColorType": "visualizationColors",
+                          "position": 1
+                        }
+                      }
+                    ]
+                  }
+                },
+                "label": {
+                  "show": true
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 5,
+            "width": 4,
+            "height": 6
           }
         }
       ],
