@@ -49,6 +49,23 @@
         "GROUP BY `Purchase Type`, `Ticket Class`\n",
         "ORDER BY `Purchase Type`, `Ticket Class`"
       ]
+    },
+    {
+      "name": "4f5c023b",
+      "displayName": "Top 10 Most popular Routes",
+      "queryLines": [
+        "SELECT \r\n",
+        "    `Departure Station`,\r\n",
+        "    `Arrival Destination`,\r\n",
+        "    CONCAT(`Departure Station`, ' → ', `Arrival Destination`) AS route,\r\n",
+        "    COUNT(*) AS booking_count,\r\n",
+        "    AVG(Price) AS avg_price,\r\n",
+        "    SUM(Price) AS total_revenue\r\n",
+        "FROM workspace.default.railway\r\n",
+        "GROUP BY `Departure Station`, `Arrival Destination`\r\n",
+        "ORDER BY booking_count DESC\r\n",
+        "LIMIT 10;"
+      ]
     }
   ],
   "pages": [
@@ -275,7 +292,7 @@
           "position": {
             "x": 0,
             "y": 5,
-            "width": 4,
+            "width": 3,
             "height": 6
           }
         },
@@ -309,9 +326,10 @@
               "version": 3,
               "frame": {
                 "title": "Purchase Type by Ticket Class",
-                "showTitle": true
+                "showTitle": true,
+                "headerAlignment": "center"
               },
-              "widgetType": "bar",
+              "widgetType": "histogram",
               "encodings": {
                 "x": {
                   "fieldName": "Purchase Type",
@@ -329,9 +347,6 @@
                 },
                 "color": {
                   "fieldName": "Ticket Class",
-                  "legend": {
-                    "position": "right"
-                  },
                   "displayName": "Ticket Class",
                   "scale": {
                     "type": "categorical"
@@ -347,6 +362,122 @@
             "x": 4,
             "y": 0,
             "width": 4,
+            "height": 5
+          }
+        },
+        {
+          "widget": {
+            "name": "top-10-most-popular-routes",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "4f5c023b",
+                  "fields": [
+                    {
+                      "name": "booking_count",
+                      "expression": "`booking_count`"
+                    },
+                    {
+                      "name": "route",
+                      "expression": "`route`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "showTitle": true,
+                "showDescription": false,
+                "title": "Top 10 Most Popular Routes",
+                "headerAlignment": "center"
+              },
+              "mark": {
+                "colors": [
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 3
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 2
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 3
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 4
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 5
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 6
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 7
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 8
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 9
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 10
+                  }
+                ]
+              },
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "booking_count",
+                  "axis": {
+                    "hideLabels": false,
+                    "hideGrid": false
+                  },
+                  "scale": {
+                    "type": "quantitative",
+                    "domain": {
+                      "min": 0,
+                      "max": 4000
+                    }
+                  }
+                },
+                "y": {
+                  "fieldName": "route",
+                  "axis": {
+                    "hideLabels": false,
+                    "hideTitle": true
+                  },
+                  "scale": {
+                    "type": "categorical",
+                    "sort": {
+                      "by": "x-reversed"
+                    }
+                  }
+                },
+                "label": {
+                  "show": false
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 3,
+            "y": 5,
+            "width": 5,
             "height": 6
           }
         }
@@ -380,6 +511,11 @@
       ],
       "pageType": "PAGE_TYPE_GLOBAL_FILTERS",
       "layoutVersion": "GRID_V1"
+    },
+    {
+      "name": "d55b9eb9",
+      "displayName": "Untitled page",
+      "pageType": "PAGE_TYPE_CANVAS"
     }
   ],
   "uiSettings": {
