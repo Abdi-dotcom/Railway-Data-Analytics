@@ -7,7 +7,7 @@
         "SELECT `Payment Method`, COUNT(*) AS count\n",
         "FROM workspace.default.railway\n",
         "GROUP BY `Payment Method`\n",
-        "ORDER BY count DESC"
+        "ORDER BY count DESC\n"
       ]
     },
     {
